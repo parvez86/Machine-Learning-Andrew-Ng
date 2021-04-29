@@ -1,0 +1,139 @@
+Section 1:
+task 1--> wormUpExcercise.m:
+    A = eye(5)
+
+task2 --> plotData.m:
+    plotData.m:
+        plot(x, y, 'rx', 'MarkerSize', 10); % Plot the data
+        ylabel('Profit in $10,000s'); % Set the y-axis label
+        xlabel('Population of City in 10,000s'); % Set the x-axis label
+    
+    terminal: 
+        data = load('ex1data1.txt'); % read comma separated data
+        X = data(:, 1); y = data(:, 2);
+        plotData(X,y)
+
+task3 --> gradientDescent.m: 
+    terminal:
+    m = length(X) % number of training examples
+    X = [ones(m, 1),data(:,1)]; % Add a column of ones to x
+    theta = zeros(2, 1); % initialize fitting parameters
+    iterations = 1500;
+    alpha = 0.01;
+
+    computeCost.m:
+        h_theta = X * theta;
+        j = sum((h_theta-y).^2)/(2*m);
+    
+    gradienDescent.m:
+     theta = theta - ((alpha/m) * (X' * (X * theta - y)))
+
+    check:
+        computeCost(X,y, theta) ans: 32.07
+        computeCost(X,y, [-1:2]) ans: 54.45
+
+    submit & passed the assingmnet
+
+Section 2(optional):
+
+1. type: 
+    % Load Data
+    data = load('ex1data2.txt');
+    X = data(:, 1:2);
+    y = data(:, 3);
+    m = length(y);
+    
+    % Print out some data points
+    % First 10 examples from the dataset
+    fprintf(' x = [%.0f %.0f], y = %.0f \n', [X(1:10,:) y(1:10,:)]');
+    
+    type:
+        % for adding 1 column to the X
+        X = [ones(m, 1) X];
+
+    type:
+        % Run gradient descent
+        % Choose some alpha value
+        alpha = 0.1;
+        num_iters = 400;
+        
+        % Init Theta and Run Gradient Descent 
+        theta = zeros(3, 1);
+        [theta, ~] = gradientDescentMulti(X, y, theta, alpha, num_iters);
+        
+        % Display gradient descent's result
+        fprintf('Theta computed from gradient descent:\n%f,\n%f',theta(1),theta(2))
+    Type:
+    ``  % Estimate the price of a 1650 sq-ft, 3 br house
+        % ====================== YOUR CODE HERE ======================
+        
+        price = theta' * [1;1650;3]
+        % ============================================================
+        
+        fprintf('Predicted price of a 1650 sq-ft, 3 br house (using gradient descent):\n $%f', price);
+
+2. featureNormalize.m:
+     mu = mean(X)
+    X_norm = bsxfun(@minus,X_norm,mu)
+    sigma = std(X_norm)
+    X_norm = bsxfun(@rdivide, X_norm, sigma)
+
+3. gradientDescentMulti.m:
+     theta = theta - ((alpha/m) * (X' * (X * theta - y)))
+
+4. computeCostMulti.m:
+        h_theta = X * theta;
+    J = sum((h_theta-y).^2)/(2*m);
+5. normalEqn.m:
+    theta = inv(X'*X)*(X'*y)
+
+Again, start typing:
+    1. for gradientDescentMulti.m:
+        % Run gradient descent
+        % Replace the value of alpha below best alpha value you found above
+        alpha = 0.1;
+        num_iters = 400;
+        
+        % Init Theta and Run Gradient Descent 
+        theta = zeros(3, 1);
+        [theta, ~] = gradientDescentMulti(X, y, theta, alpha, num_iters);
+        
+        % Display gradient descent's result
+        fprintf('Theta computed from gradient descent:\n%f\n%f',theta(1),theta(2))
+        
+        % Estimate the price of a 1650 sq-ft, 3 br house. You can use the same
+        % code you entered ealier to predict the price
+        % ====================== YOUR CODE HERE ======================
+        
+        price = theta' * [1;1650;3]
+        
+        % ============================================================
+        
+        fprintf('Predicted price of a 1650 sq-ft, 3 br house (using gradient descent):\n $%f', price);
+
+    2. noemalEqn.m:
+        % Solve with normal equations:
+        % Load Data
+        data = csvread('ex1data2.txt');
+        X = data(:, 1:2);
+        y = data(:, 3);
+        m = length(y);
+        
+        % Add intercept term to X
+        X = [ones(m, 1) X];
+        
+        % Calculate the parameters from the normal equation
+        theta = normalEqn(X, y);
+        
+        % Display normal equation's result
+        fprintf('Theta computed from the normal equations:\n%f\n%f', theta(1),theta(2));
+        % Estimate the price of a 1650 sq-ft, 3 br house. 
+        % ====================== YOUR CODE HERE ======================
+        
+        price = theta' * [1;1650;3]
+        % ============================================================
+        
+        fprintf('Predicted price of a 1650 sq-ft, 3 br house (using normal equations):\n $%f', price); 
+
+       submit & finish the job
+    
